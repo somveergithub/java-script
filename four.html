@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM learning</title>
+    <style>
+        .bg-black{
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-black">
+    <ul class="language">
+        <li>javascript</li>
+    </ul>
+</body>
+<script>
+    // we are traversing the complete tree to add the element when setting innerHTML
+    function addLanguage(langName){
+        const li = document.createElement('li')
+        li.innerHTML = `${langName}`
+        document.querySelector('.language').appendChild(li)
+    }
+
+    addLanguage("Python")
+    addLanguage("typescript")
+
+    // this is optimized compared to the above one as we are not traversing the whole tree
+    function addOptLang(langName){
+        const li = document.createElement('li')
+        li.appendChild(document.createTextNode(langName))
+        document.querySelector('.language').appendChild(li)
+    }
+
+    addOptLang("golang")
+
+
+    //Editing value
+    const secondlang = document.querySelector("li:nth-child(2)")
+    // secondlang.innerHTML = "MOJO"
+    const newli = document.createElement('li')
+    newli.textContent = "Mojo"
+
+    secondlang.replaceWith(newli)
+
+
+    //edit
+    const sl = document.querySelector("li:first-child")
+    console.log(sl);
+    sl.outerHTML = '<li>typescript<li>'
+
+    //remove
+    const lastlang = document.querySelector("li:last-child")
+    lastlang.remove()
+
+
+    const allli = document.querySelectorAll('li')
+    console.log(allli);
+
+    allli.forEach(function (mli){
+        const textContent = mli.textContent;
+        if (textContent == ''){
+            mli.remove()
+        }
+    })
+</script>
+</html>
