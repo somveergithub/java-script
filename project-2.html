@@ -19,9 +19,70 @@
                 <input type="text" id="weight"/>
             </p>
             <button>Calculate</button>
-            <di</div>
-            
+            <div id="results"></div>
+            <div id="weight-guide">
+                <h3>BMI Weight Guide</h3>
+                <p id="uw">Under Weight = Less than 18.6</p>
+                <p id="nw">Normal Range = 18.6 and 24.9</p>
+                <p id="ow">OverWeight = Greater than 24.9</p>
+            </div>
         </form>
     </div>
 </body>
+<script>
+    // console.log('hello world');
+    const form = document.querySelector('form');
+    // const temp = document.querySelector('#uw')
+    // console.log(temp);
+
+    function resetBMIColor(){
+        const t1 = document.querySelector('#uw')
+        t1.style.backgroundColor = "white"
+
+        const t2 = document.querySelector('#ow')
+        t2.style.backgroundColor = "white"
+
+        const t3 = document.querySelector('#nw')
+        t3.style.backgroundColor = "white"
+
+    }
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        resetBMIColor()
+
+        const height = parseInt(document.querySelector('#height').value)
+        console.log(height);
+        
+        const weight = parseInt(document.querySelector('#weight').value)
+        console.log(weight);
+        
+        const results = document.querySelector('#results')
+        console.log(results);
+
+        if (height === '' || height <= 0 || isNaN(height)) {
+            console.log('inside if');
+            results.innerHTML = "Please give a valid height"
+        } else if (weight === '' || weight <= 0 || isNaN(weight)) {
+            console.log('inside if');
+            results.innerHTML = "Please give a valid weight"
+        } else {
+            const bmi = (weight/ ((height*height)/10000)).toFixed(2)
+            results.innerHTML = `<span>${bmi}</span>`
+
+            if (bmi < 18.6) {
+                const uw = document.querySelector('#uw')
+                uw.style.backgroundColor = "green"
+            } else if (bmi >= 18.6 && bmi <= 24.9) {
+                const nw = document.querySelector('#nw')
+                console.log(nw);
+                nw.style.backgroundColor = "green"
+            } else if (bmi > 24.9) {
+                const ow = document.querySelector('#ow')
+                ow.style.backgroundColor = "green"
+            }
+        }
+        
+    });
+</script>
 </html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .main {
+            align-self: center;
+            text-align: center;
+        }
+
+        #submit {
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <h1 class="title">Number Guessing Game</h1>
+        <div class="main">
+            <p>Try and guess a random number between 1 and 100</p>
+            <p id="guesses">You have 10 attemps to guess the number.</p>
+            <form>
+                <input type="text" id="input">
+                <input type="submit" value="Submit Guess" id="subt">
+            </form>
+            <div class="resultParas">
+                <p>Previous Guesses: <span class="guesses"></span> </p>
+                <p>Guesses Remaining: <span class="lastResults">10</span> </p>
+                <p class="lowOrHi"></p>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let randomNum = parseInt(Math.random()*100+1);
+    console.log('RandomNum: ',randomNum);
+    let guessesLeft = 10;
+    let guessedList = []
+
+    const form = document.querySelector('form')
+
+    function resetPage() {
+        randomNum = parseInt(Math.random()*100+1);
+        console.log(randomNum);
+        guessesLeft = 10
+        guessedList = []
+        
+        const lastResults = document.querySelector('.lastResults')
+        const guesses = document.querySelector('.guesses')
+        lastResults.innerHTML = `${guessesLeft}`
+        guesses.innerHTML = `${guessedList}`
+
+        const input = document.getElementById('#input')
+        console.log(input);
+    }
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const gNum = parseInt(document.querySelector('#input').value)
+        console.log('gnum: ',gNum);
+        const res = document.querySelector('.lowOrHi')
+        const lastResults = document.querySelector('.lastResults')
+        const guesses = document.querySelector('.guesses')
+
+        if (gNum <=0 || gNum > 100) {
+            res.innerHTML = "Please type a number between 1 and 100."
+        } else {
+            // console.log(typeof gNum);
+            // console.log(typeof randomNum);
+            if (gNum === randomNum && guessesLeft > 0) {
+                res.innerHTML = "Conguratulations you have guessed the correct number. Try guessing another number!"
+                resetPage();
+            }
+            else {
+                guessedList.push(gNum)
+                guessesLeft = guessesLeft - 1
+                guesses.innerHTML = `${guessedList}`
+                lastResults.innerHTML = `${guessesLeft}`
+
+                if (guessesLeft <= 0) {
+                    res.innerHTML = `You have used all your attempts. The correct number was ${randomNum}. Try guessing another number!`
+                    resetPage()
+                } else {
+                    res.innerHTML = "You have guessed the wrong number. Please guess again."
+                }
+            }
+        }
+    })
+</script>
+</html>

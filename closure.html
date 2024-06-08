@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Closure</title>
+</head>
+<body>
+    <div>
+        <button id="orange">orange</button>
+        <button id="green">green</button>
+    </div>
+</body>
+<script>
+    // this is fine if there are 2 buttons, but lets say if there are 500 buttons then we cannot write it like this
+    // document.getElementById('orange').onclick = function(){
+    //     document.body.style.backgroundColor = "orange"
+    // }
+    // document.getElementById('green').onclick = function(){
+    //     document.body.style.backgroundColor = "green"
+    // }
+    
+
+    // If we write the code like below then it will be we will face issue as the rhs needs a function and not function execution, but here when we are passing it is getting executed at the same time and further when we click the buttons the color doesn't change
+    //*************************************************
+    // function setColor(color){
+    //     document.body.style.backgroundColor = color
+    // }
+
+    // console.log(setColor("orange")); // this actually executes and sets the color due to which issue is occuring. It printed undefined as function is not returning anything.
+
+    // document.getElementById('orange').onclick = setColor("orange") 
+    // document.getElementById('green').onclick = setColor("green")
+    //*************************************************
+
+    // To fix the above issue we will be using closures
+
+    function setColor(color){
+        // document.body.style.backgroundColor = color
+
+        return function(){
+            document.body.style.backgroundColor = color
+        }
+    }
+
+    console.log(setColor("orange")); // we can see that it returns a function
+
+    document.getElementById('orange').onclick = setColor("orange") 
+    document.getElementById('green').onclick = setColor("green")
+
+
+</script>
+</html>
